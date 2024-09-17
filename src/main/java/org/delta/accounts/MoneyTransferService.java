@@ -12,6 +12,25 @@ public class MoneyTransferService {
         this.transferFeeCalculator = new TransferFeeCalculator();
     }
 
+    public void transferMoneyBetweenAccounts(BankAccount from, BankAccount to, double amount) throws NoMoneyOnAccountException {
+        if(from.getBalance() < amount) {
+            throw new NoMoneyOnAccountException("No money on account!");
+        }
+
+        this.accountDetailPrinter.printDetail(from);
+        this.accountDetailPrinter.printDetail(to);
+
+        double sourceBalance = from.getBalance();
+        double newSourceBalance = sourceBalance - amount;
+
+        from.setBalance(newSourceBalance);
+        double destinationBalance = to.getBalance();
+        double newDestinationBalance = destinationBalance + amount;
+
+        to.setBalance(newDestinationBalance);
+
+    }
+
     public void addMoney(BankAccount account, double amount) {
         double balance = account.getBalance();
         double newBalance;

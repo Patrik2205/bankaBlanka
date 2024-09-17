@@ -15,15 +15,13 @@ public class BankAccount {
         this.accountNumber = accountNumber;
     }
 
-    public void setBalance(double amount) {
-        balance = amount;
-    }
+    public Owner getOwner() { return owner; }
 
-    private void subMoney(double amount) {
-        balance -= amount;
-    }
+    public String getAccountNumber() { return accountNumber; }
 
-    public double getBalance() {
-        return balance;
+    public double getBalance() { return balance; }
+
+    public void setBalance(double newDestinationBalance) {
+
     }
 }
