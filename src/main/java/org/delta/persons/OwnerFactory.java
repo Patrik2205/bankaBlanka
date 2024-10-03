@@ -4,8 +4,8 @@ public class OwnerFactory {
 
     private PersonIdValidator idValidator;
 
-    public OwnerFactory() {
-        this.idValidator = new PersonIdValidator();
+    public OwnerFactory(PersonIdValidator idValidator) {
+        this.idValidator = idValidator;
     }
 
     public Owner createOwner(String name, String lastName, int personId) {

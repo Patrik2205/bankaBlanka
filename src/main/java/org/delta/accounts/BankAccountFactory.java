@@ -1,21 +1,26 @@
 package org.delta.accounts;
 
+import com.google.inject.Singleton;
+import com.google.inject.Inject;
 import org.delta.persons.Owner;
 
+@Singleton
 public class BankAccountFactory {
 
     private BankAccountNumberGenerator bankAccountNumberGenerator;
 
-    public BankAccount BankAccountFactory(double balance, Owner owner   ) {
-        this.bankAccountNumberGenerator = new BankAccountNumberGenerator();
-
-        return new BankAccount(balance, owner, bankAccountNumber);
-
+    @Inject
+    public BankAccountFactory(BankAccountNumberGenerator bankAccountNumberGenerator) {
+        this.bankAccountNumberGenerator = bankAccountNumberGenerator;
     }
 
     public BankAccount createBankAccount(double balance, Owner owner) {
-        String bankAccountNumber = this.bankAccountNumberGenerator.generateBankAccountNumber();
 
+        return new BankAccount(balance, owner, bankAccountNumberGenerator.generateBankAccountNumber());
+
+    }
+
+    public BankAccount createBankAccount(double balance, Owner owner, String bankAccountNumber) {
         return new BankAccount(balance, owner, bankAccountNumber);
     }
 

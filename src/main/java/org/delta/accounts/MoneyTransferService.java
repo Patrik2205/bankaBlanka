@@ -1,15 +1,18 @@
 package org.delta.accounts;
 
 import org.delta.accounts.*;
+import org.delta.print.AccountDetailPrinter;
 
 import static org.delta.accounts.TransferFeeCalculator.DEFAULT_TRANSFER_FEE;
 import static org.delta.accounts.TransferFeeCalculator.SECOND_TRANSFER_FEE;
 
 public class MoneyTransferService {
     private final TransferFeeCalculator transferFeeCalculator;
+    private AccountDetailPrinter accountDetailPrinter;
 
-    public MoneyTransferService() {
-        this.transferFeeCalculator = new TransferFeeCalculator();
+    public MoneyTransferService(TransferFeeCalculator transferFeeCalc, AccountDetailPrinter accountDetailPrinter) {
+        this.transferFeeCalculator = transferFeeCalc;
+        this.accountDetailPrinter = accountDetailPrinter;
     }
 
     public void transferMoneyBetweenAccounts(BankAccount from, BankAccount to, double amount) throws NoMoneyOnAccountException {
