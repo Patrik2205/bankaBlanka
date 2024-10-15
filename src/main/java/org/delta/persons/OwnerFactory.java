@@ -1,16 +1,21 @@
 package org.delta.persons;
 
+import com.google.inject.Inject;
+import com.google.inject.Singleton;
+import org.delta.accounts.BankAccountNumberGenerator;
+
+@Singleton
 public class OwnerFactory {
 
-    private PersonIdValidator idValidator;
+    @Inject
+    PersonIdValidator validator;
 
-    public OwnerFactory(PersonIdValidator idValidator) {
-        this.idValidator = idValidator;
-    }
+    @Inject
+    BankAccountNumberGenerator bankAccountNumberGenerator;
 
     public Owner createOwner(String name, String lastName, int personId) {
 
-        if(!this.idValidator.isPersonIdValid(personId)) {
+        if(!this.validator.isPersonIdValid(personId)) {
             System.out.println("Invalid person id: " + personId);
         }
 

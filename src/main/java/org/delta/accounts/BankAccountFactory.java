@@ -7,16 +7,12 @@ import org.delta.persons.Owner;
 @Singleton
 public class BankAccountFactory {
 
-    private BankAccountNumberGenerator bankAccountNumberGenerator;
-
     @Inject
-    public BankAccountFactory(BankAccountNumberGenerator bankAccountNumberGenerator) {
-        this.bankAccountNumberGenerator = bankAccountNumberGenerator;
-    }
+    public BankAccountNumberGenerator numberGenerator;
 
     public BankAccount createBankAccount(double balance, Owner owner) {
 
-        return new BankAccount(balance, owner, bankAccountNumberGenerator.generateBankAccountNumber());
+        return new BankAccount(balance, owner, numberGenerator.generateBankAccountNumber());
 
     }
 
@@ -25,7 +21,7 @@ public class BankAccountFactory {
     }
 
     public StudentBankAccount createStudentBankAccount(double balance, Owner owner, String accountNumber) {
-        String bankAccountNumber = this.bankAccountNumberGenerator.generateBankAccountNumber();
+        String bankAccountNumber = this.numberGenerator.generateBankAccountNumber();
 
         return new StudentBankAccount(balance, owner, accountNumber);
     }

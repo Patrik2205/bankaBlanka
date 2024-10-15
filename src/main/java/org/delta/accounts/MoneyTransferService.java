@@ -1,19 +1,19 @@
 package org.delta.accounts;
 
-import org.delta.accounts.*;
+import com.google.inject.Inject;
+import org.delta.accounts.BankAccount;
 import org.delta.print.AccountDetailPrinter;
 
 import static org.delta.accounts.TransferFeeCalculator.DEFAULT_TRANSFER_FEE;
 import static org.delta.accounts.TransferFeeCalculator.SECOND_TRANSFER_FEE;
 
 public class MoneyTransferService {
-    private final TransferFeeCalculator transferFeeCalculator;
-    private AccountDetailPrinter accountDetailPrinter;
 
-    public MoneyTransferService(TransferFeeCalculator transferFeeCalc, AccountDetailPrinter accountDetailPrinter) {
-        this.transferFeeCalculator = transferFeeCalc;
-        this.accountDetailPrinter = accountDetailPrinter;
-    }
+    @Inject
+    AccountDetailPrinter accountDetailPrinter;
+
+    @Inject
+    TransferFeeCalculator feeCalculator;
 
     public void transferMoneyBetweenAccounts(BankAccount from, BankAccount to, double amount) throws NoMoneyOnAccountException {
         if(from.getBalance() < amount) {

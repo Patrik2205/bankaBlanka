@@ -9,6 +9,16 @@ import org.delta.persons.PersonIdValidator;
 import org.delta.print.AccountDetailPrinter;
 
 public class App {
+
+    @Inject
+    OwnerFactory ownerFactory;
+
+    @Inject
+    BankAccountFactory bankAccountFactory;
+
+    @Inject
+    MoneyTransferService moneyTransferService;
+
     public void run() {
         System.out.print("Hello and welcome!");
 
@@ -29,24 +39,19 @@ public class App {
         }
     }
 
-    @Inject
-    DIContainer container;
-
     public void testBank() throws NoMoneyOnAccountException {
 
-        Owner owner1 = container.getOwnerFactory().createOwner("Clovek", "Dva",5463247);
-        BankAccount accountOne = container.getAccountFactory().createBankAccount(500, owner1);
-        Owner owner2 = container.getOwnerFactory().createOwner("Clovek", "Dva",5463247);
-        BankAccount accountTwo = container.getAccountFactory().createBankAccount(500, owner2);
-//        BankAccount accountThree = bankAccountFactory.createSavingsBankAccount(owner, 500);
-        Owner owner = container.getOwnerFactory().createOwner("Clovek", "JEdna", 5463246);
-        container.getAccountFactory().createBankAccount(1234, owner);
+        Owner owner1 = ownerFactory.createOwner("Clovek", "Dva",5463247);
+        BankAccount accountOne = bankAccountFactory.createBankAccount(500, owner1);
+        Owner owner2 = ownerFactory.createOwner("Clovek", "Dva",5463247);
+        BankAccount accountTwo = bankAccountFactory.createBankAccount(500, owner2);
+        Owner owner = ownerFactory.createOwner("Clovek", "JEdna", 5463246);
 
-        container.getService().addMoney(accountOne, 100);
-        container.getService().addMoney(accountOne, 10);
-        container.getService().addMoney(accountOne, 600);
-        container.getService().addMoney(accountOne, 150);
+        moneyTransferService.addMoney(accountOne, 100);
+        moneyTransferService.addMoney(accountOne, 10);
+        moneyTransferService.addMoney(accountOne, 600);
+        moneyTransferService.addMoney(accountOne, 150);
 
-        container.getService().transferMoneyBetweenAccounts(accountOne, accountTwo, 100);
+        moneyTransferService.transferMoneyBetweenAccounts(accountOne, accountTwo, 100);
     }
 }
