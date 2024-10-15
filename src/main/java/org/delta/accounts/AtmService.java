@@ -8,13 +8,13 @@ public class AtmService {
         }
 
         System.out.println("Balance before: " + bankAccount.getBalance());
-        bankAccount.setBalance(bankAccount.getBalance()-amount);
+        bankAccount.setBalance(bankAccount.getBalance() - amount);
         System.out.println("Balance after: " + bankAccount.getBalance());
     }
 
     public void depositMoney(BankAccount bankAccount, double amount){
         System.out.println("Balance before: " + bankAccount.getBalance());
-        bankAccount.setBalance(bankAccount.getBalance()+amount);
+        bankAccount.setBalance(bankAccount.getBalance() + amount);
         System.out.println("Balance after: " + bankAccount.getBalance());
     }
 }
