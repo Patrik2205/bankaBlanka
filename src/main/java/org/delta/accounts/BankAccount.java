@@ -3,10 +3,7 @@ package org.delta.accounts;
 import org.delta.accounts.cards.BankCard;
 import org.delta.persons.Owner;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.Map;
+import java.util.*;
 
 public class BankAccount {
     private double balance;
@@ -15,14 +12,16 @@ public class BankAccount {
 
     private String accountNumber;
 
-    private Map<String, BankCard> cards = new HashMap<>();
-
-    public BankCard getCard(String cardNumber) {
-        return cards.get(cardNumber);
-    }
+    private List<BankCard> bankCards = new ArrayList<BankCard>();
 
     public void addCard(BankCard card) {
-        cards.put(card. toString(), card);
+        this.bankCards.add(card);
+
+        card.setBankAccount(this);
+    }
+
+    public List<BankCard> getCards() {
+        return this.bankCards;
     }
 
     public BankAccount(double balance, Owner owner, String accountNumber) {

@@ -1,20 +1,33 @@
 package org.delta.accounts;
 
+import com.google.inject.Inject;
+import org.delta.accounts.cards.BankCard;
+
 public class AtmService {
 
-    public void withdrawMoney(BankAccount bankAccount, double amount) throws NoMoneyOnAccountException {
-        if(bankAccount.getBalance() < amount){
-            throw new NoMoneyOnAccountException("No money");
-        }
+    @Inject
+    MoneyTransferService moneyTransferService;
 
-        System.out.println("Balance before: " + bankAccount.getBalance());
-        bankAccount.setBalance(bankAccount.getBalance() - amount);
-        System.out.println("Balance after: " + bankAccount.getBalance());
+    @Inject
+    GlobalCardStorage globalCardStorage;
+
+    public void withdraw(BankCard card, double amount) {
+        moneyTransferService.withdrawMoney(card.getBankAccount(), amount);
     }
 
-    public void depositMoney(BankAccount bankAccount, double amount){
-        System.out.println("Balance before: " + bankAccount.getBalance());
-        bankAccount.setBalance(bankAccount.getBalance() + amount);
-        System.out.println("Balance after: " + bankAccount.getBalance());
+    public void deposit(BankCard card, double amount) {
+        moneyTransferService.depositMoney(card.getBankAccount(), amount);
+    }
+
+    public void withdraw(String cardNumber, double amount) {
+        BankCard card = globalCardStorage.get(cardNumber);
+
+        moneyTransferService.withdrawMoney(card.getBankAccount(), amount);
+    }
+
+    public void deposit(String cardNumber, double amount) {
+        BankCard card = globalCardStorage.get(cardNumber);
+
+        moneyTransferService.depositMoney(card.getBankAccount(), amount);
     }
 }
