@@ -22,12 +22,6 @@ public class App {
     BankCardFacade BankCardFacade;
 
     @Inject
-    AccountDetailPrinter accountDetailPrinter;
-
-    @Inject
-    OwnerJsonSerializationService ownerJsonSerializationService;
-
-    @Inject
     AtmService atmService;
 
     public void run() {
@@ -62,6 +56,11 @@ public class App {
         bankAccountFacade.moneyTransferService.addMoney(accountOne, 10);
         bankAccountFacade.moneyTransferService.addMoney(accountOne, 600);
         bankAccountFacade.moneyTransferService.addMoney(accountOne, 150);
+
+        atmService.deposit(accountOne.getCards().get(0), 100);
+
+        String cNumber = accountOne.getCards().get(0).getCardNumber();
+        atmService.withdraw(cNumber, 50);
 
         bankAccountFacade.moneyTransferService.transferMoneyBetweenAccounts(accountOne, accountTwo, 100);
     }
