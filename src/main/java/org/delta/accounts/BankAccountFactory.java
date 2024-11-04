@@ -8,22 +8,33 @@ import org.delta.persons.Owner;
 public class BankAccountFactory {
 
     @Inject
+    public GlobalAccountStorage globalAccountStorage;
+
+    @Inject
     public BankAccountNumberGenerator numberGenerator;
 
     public BankAccount createBankAccount(double balance, Owner owner) {
 
-        return new BankAccount(balance, owner, numberGenerator.generateBankAccountNumber());
+        BankAccount bankAccount = new BankAccount(balance, owner, numberGenerator.generateBankAccountNumber());
 
+        this.globalAccountStorage.put(bankAccount);
+
+        return bankAccount;
     }
 
     public BankAccount createBankAccount(double balance, Owner owner, String bankAccountNumber) {
         return new BankAccount(balance, owner, bankAccountNumber);
     }
 
-    public StudentBankAccount createStudentBankAccount(double balance, Owner owner, String accountNumber) {
-        String bankAccountNumber = this.numberGenerator.generateBankAccountNumber();
-
-        return new StudentBankAccount(balance, owner, accountNumber);
+    public StudentBankAccount createStudentBankAccount(double balance, Owner owner) {
+        return new StudentBankAccount(balance, owner, this.numberGenerator.generateBankAccountNumber());
     }
 
+    public SavingsAccount createSavingBankAccount(double balance, Owner owner, String accountNumber, double interestRate) {
+        SavingsAccount account = new SavingsAccount(balance, owner, accountNumber, interestRate);
+
+        this.globalAccountStorage.put(account);
+
+        return account;
+    }
 }

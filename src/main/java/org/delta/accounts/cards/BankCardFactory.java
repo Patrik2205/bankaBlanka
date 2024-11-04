@@ -15,9 +15,17 @@ public class BankCardFactory {
     GlobalCardStorage globalCardStorage;
 
     public BankCard createBankCard() {
-        return new BankCard(
+        BankCard card = new BankCard(
             this.cardNumberGenerator.generate(),
             this.bankCardPinGenerator.generate()
         );
+
+        this.globalCardStorage.put(card);
+
+        return card;
+    }
+
+    public BankCard findCard(String number) {
+        return this.globalCardStorage.get(number);
     }
 }

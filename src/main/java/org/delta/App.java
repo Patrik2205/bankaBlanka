@@ -1,14 +1,10 @@
 package org.delta;
 
 import com.google.inject.Inject;
-import org.delta.*;
 import org.delta.accounts.*;
 import org.delta.accounts.cards.BankCardFacade;
 import org.delta.persons.Owner;
 import org.delta.persons.OwnerFactory;
-import org.delta.persons.OwnerJsonSerializationService;
-import org.delta.persons.PersonIdValidator;
-import org.delta.print.AccountDetailPrinter;
 
 public class App {
 
@@ -23,6 +19,9 @@ public class App {
 
     @Inject
     AtmService atmService;
+
+    @Inject
+    Interesting interesting;
 
     public void run() {
         System.out.print("Hello and welcome!");
@@ -63,5 +62,9 @@ public class App {
         atmService.withdraw(cNumber, 50);
 
         bankAccountFacade.moneyTransferService.transferMoneyBetweenAccounts(accountOne, accountTwo, 100);
+
+        SavingsAccount savingsAccount = bankAccountFacade.createSavingBankAccount(1000, owner, "1234");
+
+        this.interesting.calculate();
     }
 }
