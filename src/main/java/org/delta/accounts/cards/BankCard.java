@@ -5,6 +5,7 @@ import org.delta.accounts.BankAccount;
 public class BankCard {
 
     private String CardNumber;
+
     private String CardPin;
 
     private BankAccount BankAccount;
@@ -14,19 +15,11 @@ public class BankCard {
         this.CardPin = generate1;
     }
 
-    public void setBankAccount(org.delta.accounts.BankAccount bankAccount) {
-        BankAccount = bankAccount;
-    }
+    public void setBankAccount(org.delta.accounts.BankAccount bankAccount) { BankAccount = bankAccount; }
 
-    public BankAccount getBankAccount() {
-        return BankAccount;
-    }
+    public BankAccount getBankAccount() { return BankAccount; }
 
-    public String getCardNumber() {
-        return CardNumber;
-    }
+    public String getCardNumber() { return CardNumber; }
 
-    public String getCardPin() {
-        return CardPin;
-    }
+    public String getCardPin() { return CardPin; }
 }

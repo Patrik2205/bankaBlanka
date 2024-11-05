@@ -10,22 +10,34 @@ public class BankAccountFacade {
     public BankAccountFactory bankAccountFactory;
 
     @Inject
+    public GlobalAccountStorage globalAccountStorage;
+
+    @Inject
     public BankCardFactory bankCardFactory;
 
     @Inject
     public MoneyTransferService moneyTransferService;
 
+    @Inject
+    public BankAccountNumberGenerator numberGenerator;
+
     public BankAccount createBankAccount(double balance, Owner owner) {
-        BankAccount bankAccount = bankAccountFactory.createBankAccount(balance, owner);
+        BankAccount bankAccount = bankAccountFactory.createBankAccount(balance, owner, numberGenerator.generateBankAccountNumber());
         BankCard paymentCard = bankCardFactory.createBankCard();
 
         bankAccount.addCard(paymentCard);
+
+        globalAccountStorage.put(bankAccount);
 
         return bankAccount;
     }
 
     public SavingsAccount createSavingBankAccount(double balance, Owner owner, String accountNumber) {
 
-        return bankAccountFactory.createSavingBankAccount(balance, owner, accountNumber, 4);
+        SavingsAccount savingsAccount = bankAccountFactory.createSavingBankAccount(balance, owner, accountNumber, 4);
+
+        globalAccountStorage.put(savingsAccount);
+
+        return savingsAccount;
     }
 }
