@@ -46,9 +46,9 @@ public class App {
     public void testBank() throws NoMoneyOnAccountException {
 
         Owner owner1 = ownerFactory.createOwner("Clovek", "Dva",5463247);
-        BankAccount accountOne = bankAccountFacade.bankAccountFactory.createBankAccount(500, owner1);
+        BankAccount accountOne = bankAccountFacade.createBankAccount(500, owner1);
         Owner owner2 = ownerFactory.createOwner("Clovek", "Dva",5463247);
-        BankAccount accountTwo = bankAccountFacade.bankAccountFactory.createBankAccount(500, owner2);
+        BankAccount accountTwo = bankAccountFacade.createBankAccount(500, owner2);
         Owner owner = ownerFactory.createOwner("Clovek", "JEdna", 5463246);
 
         bankAccountFacade.moneyTransferService.addMoney(accountOne, 100);

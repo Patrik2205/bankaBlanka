@@ -22,9 +22,7 @@ public class BankAccount {
         card.setBankAccount(this);
     }
 
-    public List<BankCard> getCards() {
-        return this.bankCards;
-    }
+    public List<BankCard> getCards() { return this.bankCards; }
 
     public BankAccount(double balance, Owner owner, String accountNumber) {
         this.balance = balance;
