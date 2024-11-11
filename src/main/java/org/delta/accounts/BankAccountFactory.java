@@ -8,9 +8,6 @@ import org.delta.persons.Owner;
 public class BankAccountFactory {
 
     @Inject
-    public GlobalAccountStorage globalAccountStorage;
-
-    @Inject
     public BankAccountNumberGenerator numberGenerator;
 
     public BankAccount createBankAccount(double balance, Owner owner, String bankAccountNumber) { return new BankAccount(balance, owner, bankAccountNumber); }
