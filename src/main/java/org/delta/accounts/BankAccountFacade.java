@@ -3,6 +3,7 @@ package org.delta.accounts;
 import com.google.inject.Inject;
 import org.delta.accounts.cards.BankCard;
 import org.delta.accounts.cards.BankCardFactory;
+import org.delta.investments.InvestmentAccount;
 import org.delta.persons.Owner;
 
 public class BankAccountFacade {
@@ -39,5 +40,10 @@ public class BankAccountFacade {
         globalAccountStorage.put(savingsAccount);
 
         return savingsAccount;
+    }
+
+    public InvestmentAccount createInvestmentAccount(double balance, Owner owner, String accountNumber) {
+        InvestmentAccount account = bankAccountFactory.createInvestmentAccount(balance, owner, accountNumber);
+        return account;
     }
 }

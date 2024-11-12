@@ -2,7 +2,6 @@ package org.delta.accounts;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
-import org.delta.accounts.BankAccount;
 import org.delta.print.AccountDetailPrinter;
 
 import static org.delta.accounts.TransferFeeCalculator.DEFAULT_TRANSFER_FEE;
@@ -66,5 +65,15 @@ public class MoneyTransferService {
             newBalance = balance + amount - SECOND_TRANSFER_FEE;
         }
         account.setBalance(newBalance);
+    }
+
+    public void subtractMoney(BankAccount bankAccount, double amount) {
+        double balance = bankAccount.getBalance();
+        double newBalance = balance - amount;
+        bankAccount.setBalance(newBalance);
+    }
+
+    public boolean hasEnoughMoney(BankAccount bankAccount, double amount) {
+        return bankAccount.getBalance() >= amount;
     }
 }

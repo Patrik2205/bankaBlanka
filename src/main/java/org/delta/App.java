@@ -5,6 +5,10 @@ import org.delta.accounts.*;
 import org.delta.accounts.cards.BankCardFacade;
 import org.delta.persons.Owner;
 import org.delta.persons.OwnerFactory;
+import org.delta.investments.*;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.util.Date;
 
 public class App {
 
@@ -22,6 +26,15 @@ public class App {
 
     @Inject
     Interesting interesting;
+
+    @Inject
+    StockFactory stockFactory;
+
+    @Inject
+    StockTransactionsService stockTransactionsService;
+
+    @Inject
+    GlobalStockStorage globalStockStorage;
 
     public void run() {
         System.out.print("Hello and welcome!");
@@ -44,6 +57,7 @@ public class App {
     }
 
     public void testBank() throws NoMoneyOnAccountException {
+        DateFormat dateFormat = DateFormat.getDateInstance();
 
         Owner owner1 = ownerFactory.createOwner("Clovek", "Dva",5463247);
         BankAccount accountOne = bankAccountFacade.createBankAccount(500, owner1);
@@ -66,5 +80,14 @@ public class App {
         SavingsAccount savingsAccount = bankAccountFacade.createSavingBankAccount(1000, owner, "1234");
 
         this.interesting.calculate();
+
+        stockFactory.createDividendStock("AAPL", 222.01, 0.0045f, Stock.DividendFrequency.QUARTERLY, new Date(2024, 8, 15));
+        stockFactory.createStock("GOOG", 170.68);
+        stockFactory.createDividendStock("O", 170.68, 0.051f, Stock.DividendFrequency.MONTHLY, new Date(2024, 10, 15));
+
+        InvestmentAccount investmentAccount = bankAccountFacade.createInvestmentAccount(1000, owner, "1234");
+        globalStockStorage.get("AAPL");
+
+        stockTransactionsService.buyStock(investmentAccount, "AAPL", 10);
     }
 }
