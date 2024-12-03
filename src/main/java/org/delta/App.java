@@ -6,6 +6,7 @@ import org.delta.accounts.cards.BankCardFacade;
 import org.delta.persons.Owner;
 import org.delta.persons.OwnerFactory;
 import org.delta.investments.*;
+import org.delta.serialization.*;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.util.Date;
@@ -35,6 +36,9 @@ public class App {
 
     @Inject
     GlobalStockStorage globalStockStorage;
+
+    @Inject
+    BankSerializationService bankSerializationService;
 
     public void run() {
         System.out.print("Hello and welcome!");
@@ -89,5 +93,7 @@ public class App {
         globalStockStorage.get("AAPL");
 
         stockTransactionsService.buyStock(investmentAccount, "AAPL", 10);
+
+        bankSerializationService.serializeAndWriteToFile();
     }
 }
